@@ -16,20 +16,25 @@ Function Get-VSTSProjects {
         [Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)]
         [string]$Token='',
 
+        [switch]$Raw = $false,
+
         [Parameter(Mandatory=$false,ValueFromPipelineByPropertyName=$true)]
-        [string]$Account
+        [string]$VSTSAccount
 
     )
-
-    process {
+    begin {
         $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $User,$Token)))
         $headers = @{}
-        $headers.Add("Authorization","Basic " + $EncodedText)
-
-        $uri = "https://" + "$($Account).VisualStudio.com/DefaultCollection/_apis/projects?api-version=2.0"
+        $headers.Add("Authorization","Basic " + $EncodedText)  
+        $uri = "https://" + "$($VSTSAccount).VisualStudio.com/DefaultCollection/_apis/projects?api-version=2.0"  
+    }
+    process {
 
         $wr= Invoke-WebRequest -Uri $uri -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)}  -Method Get -ContentType "application/json"
-        $wr
+        if($Raw){
+            $wr.Content
+        }
+        else{ConvertFrom-Json $wr.Content | Select-Object -expand value | Select-Object id, name, url, state, revision, visibility}
     }
 }
 
