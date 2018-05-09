@@ -22,7 +22,7 @@ Function Get-VSTSProjects {
 
         $wr= Invoke-RestMethod -Method GET -Uri $uri -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)} -ContentType "application/json"
         
-        $wr.value
+        $wr
 
     }
 }

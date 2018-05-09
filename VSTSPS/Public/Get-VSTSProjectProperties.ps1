@@ -24,12 +24,8 @@ Function Get-VSTSProjectProperties {
     }
     process {
 
-        $wr= Invoke-WebRequest -Uri $uri -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)}  -Method Get -ContentType "application/json"
-        ConvertFrom-Json $wr.Content | Select-Object -expand value
+        $wr= Invoke-RestMethod -Method GET -Uri $uri -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)} -ContentType "application/json"
 
-        if($Raw){
-            $wr.Content
-        }
-        else{ConvertFrom-Json $wr.Content | Select-Object -expand value }
+        $wr  | select -expandproperty value
     }
 }
