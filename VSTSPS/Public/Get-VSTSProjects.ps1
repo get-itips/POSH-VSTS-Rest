@@ -9,11 +9,11 @@ Function Get-VSTSProjects {
     [cmdletBinding()]
     param (
 
-        [Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)]
-        [pscustomobject]$VSTSSession
+         [pscustomobject]$VSTSSession=$Script:VSTSSession
 
     )
     begin {
+        Test-VSTSSession($VSTSSession)
         $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $VSTSSession.User,$VSTSSession.Token)))
 
         $uri = "https://" + "$($VSTSSession.VSTSAccount).VisualStudio.com/DefaultCollection/_apis/projects?api-version=2.0"  
@@ -22,7 +22,7 @@ Function Get-VSTSProjects {
 
         $wr= Invoke-RestMethod -Method GET -Uri $uri -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)} -ContentType "application/json"
         
-        $wr
+        $wr | Select-Object -expandproperty value
 
     }
 }
