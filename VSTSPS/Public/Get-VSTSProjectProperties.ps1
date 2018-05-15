@@ -8,10 +8,12 @@ Function Get-VSTSProjectProperties {
 
     [cmdletBinding()]
     param (
-        [pscustomobject]$VSTSSession=$Script:VSTSSession
+        
 
         [Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)]
-        [string]$Id=''
+        [string]$Id='',
+        
+        [pscustomobject]$VSTSSession=$Script:VSTSSession
     )
     begin {
         Test-VSTSSession($VSTSSession)
