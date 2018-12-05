@@ -8,13 +8,15 @@ Function Get-VSTSProjectProperties {
 
     [cmdletBinding()]
     param (
-        [Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)]
-        [pscustomobject]$VSTSSession,
+        
 
         [Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)]
-        [string]$Id=''
+        [string]$Id='',
+        
+        [pscustomobject]$VSTSSession=$Script:VSTSSession
     )
     begin {
+        Test-VSTSSession($VSTSSession)
         $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $VSTSSession.User,$VSTSSession.Token)))
         $uri = "https://" + "$($VSTSSession.VSTSAccount).VisualStudio.com/_apis/projects/"+"$($Id)/properties?api-version=5.0-preview.1"  
     }

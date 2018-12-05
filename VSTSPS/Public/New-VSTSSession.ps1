@@ -16,8 +16,11 @@ Function New-VSTSSession{
             [string]$Token='',
 
             [Parameter(Mandatory=$false,ValueFromPipelineByPropertyName=$true)]
-            [string]$VSTSAccount=''
+            [string]$VSTSAccount='',
             
+            [switch]$Default,
+            [Alias('PassThrough')]
+            [switch]$PassThru
         )
 
             $newSession = [pscustomobject]@{
@@ -25,5 +28,13 @@ Function New-VSTSSession{
                 Token = $Token
                 VSTSAccount = $VSTSAccount
             } 
-        $newSession
+
+            If ($Default -or !($Script:VSTSSession)){
+                $Script:VSTSSession = $newSession
+            }
+
+            If ($PassThru){
+                $newSession
+            }
+        
 }
