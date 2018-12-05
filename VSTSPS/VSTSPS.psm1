@@ -1,8 +1,8 @@
 <#
 .SYNOPSIS  
-    A module for using the VSTS Rest API published by Microsoft https://docs.microsoft.com/en-us/rest/api/vsts/?view=vsts-rest-4.1
+    A module for using the Azure DevOps Rest API published by Microsoft https://docs.microsoft.com/en-us/rest/api/vsts/?view=vsts-rest-4.1
 .DESCRIPTION  
-    This module uses the VSTS Rest API to manipulate and query projects
+    This module uses the Azure DevOps Rest API to manipulate and query projects
     
 .NOTES  
     File Name    : VSTSPS.psm1
