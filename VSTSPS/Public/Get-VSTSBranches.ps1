@@ -1,7 +1,7 @@
 Function Get-VSTSBranches {
     <#
 .SYNOPSIS
-    Retrieve a list of VSTS/TFS Branches by Repository Id and Project Name
+    Retrieve a list of Azure DevOps/TFS Branches by Repository Id and Project Name
 .NOTES
     N/A
 #>
